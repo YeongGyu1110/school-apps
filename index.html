@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Workspace Portal | SaaS Launcher</title>
+    <meta name="description" content="사내 및 학급 관리 도구를 한 곳에서 모아보는 포털 시스템">
+    
+    <!-- 모던 폰트 (Pretendard) 적용 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="preload">
+    
+    <!-- 모바일 전용 헤더 -->
+    <header class="mobile-header">
+        <div class="brand-info">
+            <svg class="brand-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <h1>Workspace</h1>
+        </div>
+        <button class="btn-icon" onclick="toggleSidebar()" title="메뉴 열기">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+    </header>
+
+    <div class="app-layout">
+        <!-- 모바일 환경 오버레이 -->
+        <div id="overlay" onclick="toggleSidebar()"></div>
+
+        <!-- 좌측 조작 패널 (Sidebar - 검색 및 필터) -->
+        <aside class="control-panel" id="sidebar">
+            
+            <div class="brand-deck">
+                <div class="brand-title">
+                    <div class="brand-logo-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="brand-text">
+                        <h2>Service Portal</h2>
+                        <p>App Launcher</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-scroll-area">
+                <!-- 1. 검색창 -->
+                <div class="control-group">
+                    <span class="group-label">Search Apps</span>
+                    <div class="search-input-wrapper">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="searchInput" class="search-input" placeholder="서비스 이름 검색..." autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- 2. 카테고리 필터 (JS에서 이벤트 연동) -->
+                <div class="control-group" style="margin-top: 10px;">
+                    <span class="group-label">Categories</span>
+                    <nav class="category-nav" id="categoryNav">
+                        <button class="nav-item active" data-category="all">
+                            <span class="nav-text">전체 보기 (All)</span>
+                            <span class="nav-count" id="count-all">0</span>
+                        </button>
+                        <button class="nav-item" data-category="class">
+                            <span class="nav-text">학급 경영 (Class)</span>
+                            <span class="nav-count" id="count-class">0</span>
+                        </button>
+                        <button class="nav-item" data-category="manage">
+                            <span class="nav-text">학생 관리 (Manage)</span>
+                            <span class="nav-count" id="count-manage">0</span>
+                        </button>
+                        <button class="nav-item" data-category="admin">
+                            <span class="nav-text">행정 업무 (Admin)</span>
+                            <span class="nav-count" id="count-admin">0</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- 하단 테마 변경 -->
+            <div class="panel-footer">
+                <button class="btn btn-ghost theme-toggle-btn" onclick="toggleTheme()">
+                    <svg id="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg id="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <span id="theme-text">다크 테마 전환</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- 우측 메인 작업 영역 -->
+        <main class="workspace">
+            <div class="workspace-header">
+                <div>
+                    <h2 class="workspace-title">모든 서비스</h2>
+                    <p class="workspace-desc">필요한 앱을 클릭하여 바로 시작하세요.</p>
+                </div>
+            </div>
+
+            <!-- 앱 카드가 렌더링될 Grid 컨테이너 -->
+            <div class="app-grid" id="appGrid">
+                <!-- Javascript를 통해 이곳에 카드 UI가 생성됩니다. -->
+            </div>
+
+            <!-- 검색 결과가 없을 때 표시할 빈 상태 (Empty State) -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <h3>검색 결과가 없습니다</h3>
+                <p>다른 검색어를 입력하거나 카테고리 필터를 변경해보세요.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

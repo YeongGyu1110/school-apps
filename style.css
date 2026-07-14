@@ -1,0 +1,348 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   1. CSS Variables (테마 및 공통 색상 시스템)
+   ========================================================================== */
+:root {
+    /* Light Theme (Base) */
+    --bg-app: #f5f5f4;        /* 부드러운 웜그레이 */
+    --bg-canvas: #ffffff;     /* 카드 및 메인 패널 */
+    --bg-input: #fafaf9;      /* 인풋 영역 */
+    --text-primary: #1c1917;  /* 주 텍스트 */
+    --text-secondary: #44403c;/* 부조 텍스트 */
+    --text-muted: #78716c;    /* 설명 및 메타 텍스트 */
+    --border-primary: #e7e5e4;/* 경계선 */
+    --border-muted: #f5f5f4;
+    
+    /* Accent & Status */
+    --primary: #4f46e5;       /* 핵심 인디고 */
+    --primary-hover: #4338ca;
+    --primary-light: #e0e7ff;
+    --danger: #ef4444;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] {
+    /* Dark Theme */
+    --bg-app: #09090b;
+    --bg-canvas: #18181b;
+    --bg-input: #27272a;
+    --text-primary: #fafafa;
+    --text-secondary: #e4e4e7;
+    --text-muted: #a1a1aa;
+    --border-primary: #27272a;
+    --border-muted: #18181b;
+    
+    /* Accent & Status */
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --primary-light: rgba(99, 102, 241, 0.15);
+    --danger: #f87171;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   2. Reset & Basics
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body.preload, body.preload * {
+    transition: none !important;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-primary); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Layout Grid */
+.app-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    min-height: 100vh;
+}
+
+.mobile-header { display: none; }
+
+#overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px); z-index: 90;
+    opacity: 0; visibility: hidden; transition: 0.2s ease;
+}
+#overlay.active { opacity: 1; visibility: visible; }
+
+/* ==========================================================================
+   3. Sidebar (Control Panel)
+   ========================================================================== */
+.control-panel {
+    background-color: var(--bg-canvas);
+    border-right: 1px solid var(--border-primary);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand-deck {
+    padding: 24px;
+    border-bottom: 1px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+}
+.brand-title { display: flex; align-items: center; gap: 12px; }
+.brand-logo-box { width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.brand-logo-box svg { width: 20px; height: 20px; }
+.brand-text h2 { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.brand-text p { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.panel-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.group-label {
+    display: block; font-size: 11px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;
+}
+.control-group { display: flex; flex-direction: column; gap: 12px; }
+
+/* Search Box Customizing */
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+.search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; color: var(--text-muted); pointer-events: none;
+}
+.search-input {
+    width: 100%; padding: 12px 14px 12px 40px; background: var(--bg-input);
+    border: 1px solid var(--border-primary); border-radius: 8px; font-size: 13px;
+    font-weight: 600; color: var(--text-primary); outline: none; transition: all 0.2s;
+}
+.search-input:focus {
+    border-color: var(--primary); background: var(--bg-canvas);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+/* Category Navigation */
+.category-nav {
+    display: flex; flex-direction: column; gap: 6px;
+}
+.nav-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px; background: transparent; border: none; border-radius: 8px;
+    color: var(--text-secondary); font-size: 13px; font-weight: 600;
+    cursor: pointer; text-align: left; transition: all 0.15s ease;
+}
+.nav-item:hover {
+    background: var(--bg-input); color: var(--text-primary);
+}
+.nav-item.active {
+    background: var(--primary-light); color: var(--primary);
+}
+.nav-count {
+    font-size: 10px; font-weight: 700; background: var(--border-primary);
+    color: var(--text-muted); padding: 2px 8px; border-radius: 20px;
+    transition: background 0.15s, color 0.15s;
+}
+.nav-item.active .nav-count {
+    background: var(--primary); color: white;
+}
+
+/* Footer & Buttons */
+.panel-footer {
+    padding: 24px; border-top: 1px solid var(--border-primary);
+    background: var(--bg-canvas);
+}
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 12px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    border: 1px solid transparent; cursor: pointer; transition: all 0.2s ease;
+}
+.btn-ghost { background: transparent; color: var(--text-secondary); }
+.btn-ghost:hover { background: var(--bg-input); color: var(--text-primary); }
+
+[data-theme="light"] #icon-sun { display: none; }
+[data-theme="light"] #icon-moon { display: block; }
+[data-theme="dark"] #icon-sun { display: block; }
+[data-theme="dark"] #icon-moon { display: none; }
+
+/* ==========================================================================
+   4. Workspace & Grid System
+   ========================================================================== */
+.workspace {
+    padding: 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background-color: var(--bg-app);
+    background-image: radial-gradient(var(--border-primary) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.workspace-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+}
+.workspace-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.workspace-desc { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+/* Responsive Card Grid */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+/* App Card Styling */
+.app-card {
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 200px; /* 고정 높이로 그리드 일관성 확보 */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.app-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 16px;
+}
+.card-icon-box {
+    width: 42px; height: 42px; background: var(--bg-input);
+    color: var(--primary); border-radius: 8px; display: flex;
+    align-items: center; justify-content: center; transition: background-color 0.2s;
+}
+.app-card:hover .card-icon-box {
+    background: var(--primary-light);
+}
+.card-icon-box svg { width: 22px; height: 22px; }
+
+.launch-arrow {
+    color: var(--text-muted); opacity: 0; transform: translateX(-4px);
+    transition: all 0.2s ease;
+}
+.app-card:hover .launch-arrow {
+    opacity: 1; transform: translateX(0); color: var(--primary);
+}
+
+.card-body {
+    flex: 1; display: flex; flex-direction: column; justify-content: space-between;
+}
+.card-title {
+    font-size: 15px; font-weight: 700; color: var(--text-primary);
+    letter-spacing: -0.01em; margin-bottom: 6px;
+}
+.card-desc {
+    font-size: 12px; color: var(--text-muted); line-height: 1.5;
+    /* 3줄 이상일 때 생략 표시 처리 */
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Category Badges inside Card */
+.card-badge {
+    align-self: flex-start; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px;
+    border-radius: 4px; background: var(--border-muted); color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   5. Empty State
+   ========================================================================== */
+.empty-state {
+    padding: 80px 20px; text-align: center; display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    background: var(--bg-canvas); border: 1px dashed var(--border-primary);
+    border-radius: 12px; width: 100%;
+}
+.empty-icon-box {
+    width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 16px;
+}
+.empty-icon-box svg { width: 100%; height: 100%; }
+.empty-state h3 { font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px; }
+.empty-state p { font-size: 12px; color: var(--text-muted); }
+
+/* ==========================================================================
+   6. Responsive Layout
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    /* Mobile Sticky Header */
+    .mobile-header {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 16px 20px; background: var(--bg-canvas); border-bottom: 1px solid var(--border-primary);
+        position: sticky; top: 0; z-index: 80;
+    }
+    .brand-info { display: flex; align-items: center; gap: 8px; }
+    .brand-info .brand-logo { width: 24px; height: 24px; color: var(--primary); }
+    .brand-info h1 { font-size: 16px; font-weight: 800; }
+
+    /* Main Workspace Adjustment */
+    .workspace { padding: 24px 16px; background-size: 16px 16px; gap: 24px; }
+    .app-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+    /* Mobile Off-canvas Navigation */
+    .control-panel {
+        position: fixed; top: auto; bottom: 0; left: 0; right: 0;
+        height: 75vh; border-right: none; border-top: 1px solid var(--border-primary);
+        border-radius: 20px 20px 0 0; transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 100;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+    }
+    .control-panel.active { transform: translateY(0); }
+    
+    .brand-deck { display: none; }
+    .panel-scroll-area { padding: 20px; }
+    .panel-footer { padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+}

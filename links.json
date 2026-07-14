@@ -1,0 +1,18 @@
+[
+    {
+        "id": "app-01",
+        "title": "학급 자리 배치 시스템",
+        "description": "스마트한 랜덤 자리 배치 및 HWP 파일 자동 생성 도구입니다.",
+        "category": "class",
+        "url": "https://yeonggyu1110.github.io/class-layout/",
+        "icon": "layout"
+    },
+    {
+        "id": "app-02",
+        "title": "시험 감독 배정 엔진",
+        "description": "교사들의 시험 감독 일정을 공평하게 자동 배정하는 시스템입니다.",
+        "category": "admin",
+        "url": "https://yeonggyu1110.github.io/gam-dog/",
+        "icon": "calendar"
+    }
+]
