@@ -65,7 +65,56 @@ async function loadPortalData() {
         console.warn('links.json 로드 실패. 로컬 가상 백업 데이터를 로딩합니다.', error);
         
         // CORS 정책 등으로 로컬 파일 로드가 거부되었을 때 정상 동작을 유도하는 가상 백업 데이터
-        appDataList = [];
+        appDataList = [
+            {
+                "id": "01",
+                "title": "gamdog",
+                "description": "교사의 시험 감독 일정을 자동 배정합니다.",
+                "category": "admin",
+                "url": "https://yeonggyu1110.github.io/gamdog/",
+                "icon": "calendar"
+            },
+            {
+                "id": "02",
+                "title": "class-layout",
+                "description": "학급 내 학생의 자리를 랜덤으로 배치시킵니다. .hwp 파일 생성을 지원합니다.",
+                "category": "class",
+                "url": "https://yeonggyu1110.github.io/class-layout/",
+                "icon": "layout"
+            },
+            {
+                "id": "03",
+                "title": "clean-assign",
+                "description": "학급 내 학생의 청소구역을 자동으로 배정해줍니다. .hwp 파일 생성을 지원합니다.",
+                "category": "class",
+                "url": "https://yeonggyu1110.github.io/clean-assign/",
+                "icon": "users"
+            },
+            {
+                "id": "04",
+                "title": "excel-answer-checker",
+                "description": "학생의 시험 점수를 자동으로 채점합니다. 엑셀 형식을 지원합니다.",
+                "category": "class",
+                "url": "https://yeonggyu1110.github.io/excel-answer-checker/",
+                "icon": "default"
+            },
+            {
+                "id": "05",
+                "title": "card-flip",
+                "description": "unknown webpage",
+                "category": "another",
+                "url": "https://yeonggyu1110.github.io/card-flip/",
+                "icon": "default"
+            },
+            {
+                "id": "06",
+                "title": "3dPrinter",
+                "description": "3D프린터운용기능사 기출문제를 풀어볼 수 있습니다.",
+                "category": "another",
+                "url": "https://yeonggyu1110.github.io/3dPrinter/",
+                "icon": "default"
+            }
+        ];
     }
     
     // 로드 후 데이터 집계 및 화면 생성
