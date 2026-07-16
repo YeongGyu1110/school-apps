@@ -65,32 +65,7 @@ async function loadPortalData() {
         console.warn('links.json 로드 실패. 로컬 가상 백업 데이터를 로딩합니다.', error);
         
         // CORS 정책 등으로 로컬 파일 로드가 거부되었을 때 정상 동작을 유도하는 가상 백업 데이터
-        appDataList = [
-            {
-                "id": "app-01",
-                "title": "학급 자리 배치 시스템",
-                "description": "교실 학생 명단을 바탕으로 1초 만에 자리 및 짝꿍을 자동 배치해 줍니다.",
-                "category": "class",
-                "url": "./index.html",
-                "icon": "layout"
-            },
-            {
-                "id": "app-02",
-                "title": "학생 상담 기록부",
-                "description": "클라우드 스토리지에 간편하게 학생들의 일상 상담과 특이사항을 영구 보존합니다.",
-                "category": "manage",
-                "url": "#",
-                "icon": "users"
-            },
-            {
-                "id": "app-03",
-                "title": "시험 감독 배정 엔진",
-                "description": "교과목 중복을 회피하여 교실과 복도 시험 감독 교사를 완전 자동으로 배정합니다.",
-                "category": "admin",
-                "url": "#",
-                "icon": "calendar"
-            }
-        ];
+        appDataList = [];
     }
     
     // 로드 후 데이터 집계 및 화면 생성
@@ -150,7 +125,7 @@ function renderAppGrid() {
             card.target = "_blank";
 
             // 한글 카테고리 변환 매핑
-            const categoryLabels = { class: "학급 경영", manage: "학생 관리", admin: "행정 업무" };
+            const categoryLabels = { class: "학급 경영", manage: "학생 관리", admin: "행정 업무", another: "기타" };
             const friendlyCategory = categoryLabels[app.category] || app.category;
 
             card.innerHTML = `
