@@ -15,9 +15,9 @@
     --border-muted: #f5f5f4;
     
     /* Accent & Status */
-    --primary: #4f46e5;       /* 핵심 인디고 */
-    --primary-hover: #4338ca;
-    --primary-light: #e0e7ff;
+    --primary: #16a34a;       
+    --primary-hover: #15803d;
+    --primary-light: rgba(22, 163, 74, 0.1);
     --danger: #ef4444;
     
     /* Shadows */
@@ -38,9 +38,9 @@
     --border-muted: #18181b;
     
     /* Accent & Status */
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --primary-light: rgba(99, 102, 241, 0.15);
+    --primary: #9EFF8D;       
+    --primary-hover: #7CE86B;
+    --primary-light: rgba(158, 255, 141, 0.15);
     --danger: #f87171;
     
     /* Shadows */
@@ -116,7 +116,12 @@ body {
     align-items: center;
 }
 .brand-title { display: flex; align-items: center; gap: 12px; }
-.brand-logo-box { width: 36px; height: 36px; background: var(--primary); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.brand-logo-box { 
+    width: 36px; height: 36px; 
+    background: var(--primary); 
+    color: var(--bg-canvas);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; 
+}
 .brand-logo-box svg { width: 20px; height: 20px; }
 .brand-text h2 { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
 .brand-text p { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -177,7 +182,7 @@ body {
     transition: background 0.15s, color 0.15s;
 }
 .nav-item.active .nav-count {
-    background: var(--primary); color: white;
+    background: var(--primary); color: var(--bg-canvas);
 }
 
 /* Footer & Buttons */
