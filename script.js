@@ -21,7 +21,7 @@ function getIconSvg(iconName) {
 
 // 테마 변경 및 동기화
 function initTheme() {
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('schoolAppsTheme');
     const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const theme = savedTheme ? savedTheme : (systemPrefersDark ? 'dark' : 'light');
     
@@ -35,7 +35,7 @@ function toggleTheme() {
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
     body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
+    localStorage.setItem('schoolAppsTheme', newTheme);
     updateThemeButtonText(newTheme);
 }
 
