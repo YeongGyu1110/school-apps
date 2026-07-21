@@ -163,7 +163,7 @@ function renderAppGrid() {
             card.href = app.url;
             card.className = 'app-card';
             card.setAttribute('data-id', app.id);
-            card.target = "_blank";
+            // card.target = "_blank";
 
             // 한글 카테고리 변환 매핑
             const categoryLabels = { class: "학급 경영", manage: "학생 관리", admin: "행정 업무", another: "기타" };
