@@ -351,3 +351,6 @@ body {
     .panel-scroll-area { padding: 20px; }
     .panel-footer { padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
 }
+
+.btn-icon { background: none; border: none; color: var(--text-primary); padding: 8px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.btn-icon:hover { background: var(--bg-input); }
